@@ -1,0 +1,11 @@
+apiVersion: v1 
+kind: ConfigMap    
+
+metadata: 
+  name: corso-config
+  namespace: corso26
+
+
+data:
+  MESSAGGIO: "Benvenuti al corso kubernetes"
+  AMBIENTE: "Sviluppo"

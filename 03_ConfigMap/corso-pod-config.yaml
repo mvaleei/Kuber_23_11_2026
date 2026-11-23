@@ -1,0 +1,24 @@
+apiVersion: v1 
+kind: Pod   
+
+metadata:
+  name: pod-test 
+  namespace: corso26   
+
+spec:
+  containers:
+    - name: pod-test 
+      image: busybox 
+      command: ["sh", "-c", "echo Messaggio ricevuto: $MESSAGGIOLETTO - Ambiente: $CONTESTO && sleep 3600" ]
+      env:
+        - name: MESSAGGIOLETTO  #nome della variabile creata dentro questo file
+          valueFrom:
+            configMapKeyRef: 
+              name: corso-config  #nome della configmap applicata
+              key: MESSAGGIO  #nome della chiave nel rispettivo configmap 
+        - name: CONTESTO
+          valueFrom:
+            configMapKeyRef:
+              name: corso-config
+              key: AMBIENTE
+

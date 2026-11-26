@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: deployment-negozio
+  namespace: esponi
+
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: corso-pod-negozio
+  template:
+    metadata:
+      labels:
+        app: corso-pod-negozio
+    spec:
+      containers:
+        - name: corso-pod-negozio
+          image: ghostmio/serviziojava-docker-package:v1
+          ports:
+            - containerPort: 8080

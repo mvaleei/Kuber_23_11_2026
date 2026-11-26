@@ -1,0 +1,41 @@
+apiVersion: v1 
+kind: Pod 
+
+metadata:
+  name: shared-volume-pod 
+  namespace: esponi   
+
+spec:
+  containers:
+    - name: writer  
+      image: busybox:1.36 
+      command: ["sh","-c"]
+      args:
+        - |
+          echo "writer avviato";
+          while true; do 
+            date >> /data/log.txt;
+            sleep 2; 
+          done 
+      volumeMounts: 
+        - name: shared-data #il volume del pod che contiene dati shared
+          mountPath: /data  #cartella del container  
+    
+    - name: reader 
+      image: alpine:3.20 
+      command: ["sh", "-c"]
+      args: 
+        - |
+          echo " reader avviato";
+          While true; do 
+            tail -n 3 /data/log.txt 2>/dev/null;
+            sleep 3;
+          done  
+      volumeMounts: 
+        - name: shared-data 
+          mountPath: /data 
+          readOnly: true   
+
+  volumes: 
+    - name: shared-data 
+      emptyDir: {}

@@ -1,0 +1,22 @@
+apiVersion: v1 
+kind: Service  
+
+metadata: 
+  name: corso-negozio 
+  namespace: esponi   
+
+
+spec: 
+  selector:  
+    app: corso-pod-negozio 
+  ports:
+    - protocol: TCP
+      port: 80  #la porta che il container espone
+      targetPort: 8080   #porta verso cui viene girato il traffico    
+      nodePort:  30206 # 30000 -> 32767  
+  type:  NodePort
+    # ClusterIP  (valore di default) - per esporre il pod dentro il cluster kubernetes
+    # NodePort  (serve per esporre verso l'esterno del cluster kubernetes) - non gestisce il load balancer
+    # LoadBalancer (serve per esporre verso l'esterno del cluster kubernetes) - gestisce il load balancer
+
+#minikube service corso-service -n corso26  per effettuare il tunnel di minikube
